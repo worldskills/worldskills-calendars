@@ -29,7 +29,12 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/popper.js/dist/umd/popper.js",
+              "node_modules/@worldskills/bootstrap/js/dist/util.js",
+              "node_modules/@worldskills/bootstrap/js/dist/dropdown.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
