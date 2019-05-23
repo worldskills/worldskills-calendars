@@ -1,3 +1,10 @@
+<div style="background-color: #ff6c0d; padding: 10px 20px; color: #fff; text-align: center;" *ngIf="environmentWarning">
+    {{environmentWarning}}
+</div>
+<div style="background-color: #D51067; padding: 10px 20px; color: #fff; text-align: center;" *ngIf="user && user.puppeteer">
+    {{user.puppeteer.first_name}} {{user.puppeteer.last_name}} logged in as {{user.first_name}} {{user.last_name}}
+</div>
+
 <nav class="navbar navbar-expand-md ws-navbar-stripe navbar-dark ws-navbar-main">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -19,6 +26,10 @@
       </svg>
       <span class="ml-1 text-white">Calendars</span>
     </a>
+    <div class="collapse navbar-collapse">
+      <button class="btn btn-light btn-sm ml-auto" (click)="login();" *ngIf="!isLoggedIn">Log in</button>
+      <button class="btn btn-light btn-sm ml-auto" (click)="logout();" *ngIf="isLoggedIn">Log out</button>
+    </div>
   </div>
 </nav>
 

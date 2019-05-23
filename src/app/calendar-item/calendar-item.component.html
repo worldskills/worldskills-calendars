@@ -1,0 +1,97 @@
+<nav class="d-print-none">
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a routerLink="/items">Dates</a></li>
+    <li class="breadcrumb-item active">Date</li>
+  </ol>
+</nav>
+
+<div *ngIf="item">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+    <h1 class="h2">{{title||"Add Date"}}</h1>
+    <div class="btn-toolbar" *ngIf="item.id">
+      <button (click)="delete()" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+
+  <form class="mt-4" (ngSubmit)="onSubmit(calendarItemForm)" #calendarItemForm="ngForm">
+    <div class="row">
+      <div class="col-md">
+        <div class="card mb-4">
+          <h2 class="card-header h5 mt-0 mb-0">General <span class="text-muted">(Required)</span></h2>
+          <div class="card-body">
+            <fieldset>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required [ngClass]="{'is-invalid':!name.valid && (!name.pristine || submitted)}" [(ngModel)]="item.name.text" #name="ngModel">
+                <div class="invalid-feedback">Please provide a name.</div>
+              </div>
+              <div class="form-group">
+                <label for="start_date">Start date</label>
+                <div class="input-group">
+                  <input type="date" class="form-control" placeholder="YYYY-MM-DD" id="startDate" name="startDate" required [ngClass]="{'is-invalid':!startDate.valid && (!startDate.pristine || submitted)}" [(ngModel)]="item.start_date" #startDate="ngModel" #dStartDate="ngbDatepicker" ngbDatepicker>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="dStartDate.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                  </div>
+                </div>
+                <div class="invalid-feedback">Please provide a valid date.</div>
+              </div>
+              <div class="form-group">
+                <label for="start_date">End date</label>
+                <div class="input-group">
+                  <input type="date" class="form-control" placeholder="YYYY-MM-DD" id="endDate" name="endDate" required [ngClass]="{'is-invalid':!endDate.valid && (!endDate.pristine || submitted)}" [(ngModel)]="item.end_date" #endDate="ngModel" #dEndDate="ngbDatepicker" ngbDatepicker>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="dEndDate.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                  </div>
+                </div>
+                <div class="invalid-feedback">Please provide a valid date.</div>
+              </div>
+              <div class="form-group">
+                <label for="country">Country <span class="text-muted">(Optional)</span></label>
+                <select class="form-control" id="country" name="country" [compareWith]="compareCountry" [(ngModel)]="item.country">
+                  <option [ngValue]="null"></option>
+                  <option *ngFor="let country of countries" [ngValue]="country">
+                    {{ country.name.text }}
+                  </option>
+                </select>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div class="col-md mb-4">
+        <div class="card">
+          <h2 class="card-header h5 mt-0 mb-0">Details <span class="text-muted">(Optional)</span></h2>
+          <div class="card-body">
+            <fieldset>
+              <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Venue, City" [(ngModel)]="item.location.text">
+              </div>
+              <div class="form-group">
+                <label for="url">Website</label>
+                <input type="text" class="form-control" id="url" name="url" placeholder="https://www.example.org/" [(ngModel)]="item.url">
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="5" [(ngModel)]="item.description.text"></textarea>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <div class="btn-toolbar">
+        <button type="submit" class="btn btn-success mr-2" [disabled]="loading">Save</button>
+        <a routerLink="/items" class="btn btn-secondary">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="d-flex justify-content-center m-5" *ngIf="!item && loading">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>

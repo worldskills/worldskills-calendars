@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  environmentWarning: 'This is the local development environment. Happy coding!',
+  clientId: '5bc213b7bfee',
+  loginURI: 'http://worldskills-auth.localhost/oauth/authorize',
+  apiEndpoint: 'http://localhost:8080',
 };
 
 /*

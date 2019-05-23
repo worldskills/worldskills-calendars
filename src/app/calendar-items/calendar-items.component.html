@@ -1,0 +1,69 @@
+<div class="d-flex mt-2 justify-content-between flex-wrap flex-md-nowrap align-items-center">
+  <h1 class="h2">Dates and events</h1>
+  <div class="btn-toolbar">
+    <a routerLink="/item_create" class="btn btn-success">Add Date</a>
+  </div>
+</div>
+
+<div class="row mt-2">
+  <div class="col-md-9">
+    <div class="table-responsive-md">
+      <table class="table table-striped border-top">
+        <colgroup>
+          <col width="15%">
+          <col width="55%">
+          <col width="30%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="border-top-0">Start Date</th>
+            <th class="border-top-0">Name</th>
+            <th class="border-top-0">Country</th>
+          </tr>
+        </thead>
+        <tfoot>
+            <tr><td colspan="3"></td></tr>
+        </tfoot>
+        <tbody>
+          <tr *ngFor="let item of items.items">
+            <td>{{item.start_date|date:'dd.MM.yyyy'}}</td>
+            <td><a routerLink="/items/{{item.id}}">{{item.name.text}}</a></td>
+            <td>{{item.country?.name.text}}</td>
+          </tr>
+          <tr *ngIf="loading">
+              <td colspan="3" class="text-muted">Loading...</td>
+          </tr>
+          <tr *ngIf="!loading && items.items.length == 0">
+              <td colspan="3" class="text-muted">No dates found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ngb-pagination [collectionSize]="items.total_count" [(page)]="page" [pageSize]="pageSize" [maxSize]="10" [boundaryLinks]="true" (pageChange)="loadItems()"></ngb-pagination>
+  </div>
+  <div class="col-md-3">
+    <form name="form" novalidate (ngSubmit)="onSubmit(calendarItemForm)">
+      <div class="card">
+        <h2 class="card-header h5 mt-0 mb-0">Search dates</h2>
+        <div class="card-body">
+          <div class="form-group">
+              <label for="filterName">Name</label>
+              <input type="text" class="form-control" id="filterName" name="filterName" [(ngModel)]="filterName">
+          </div>
+          <div class="form-group">
+              <label for="filterCountry">Country</label>
+              <select class="form-control" id="filterCountry" name="filterCountry" [(ngModel)]="filterCountry">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let country of countries" [ngValue]="country.id">
+                  {{ country.name.text }}
+                </option>
+              </select>
+          </div>
+          <button type="submit" class="btn btn-primary px-4">Search</button>
+          <button type="button" class="btn btn-link px-4" (click)="clear()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

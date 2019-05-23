@@ -1,0 +1,112 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { CalendarItemService } from '../calendar-item.service';
+import { CalendarItem } from '../calendar-item';
+import { CountryService } from '../country.service';
+import { Country } from '../country';
+
+@Component({
+  selector: 'app-calendar-item',
+  templateUrl: './calendar-item.component.html',
+  styleUrls: ['./calendar-item.component.scss']
+})
+export class CalendarItemComponent implements OnInit {
+
+  @Input() item: CalendarItem;
+
+  title: string;
+
+  countries: Country[] = [];
+
+  submitted = false;
+
+  loading = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private calendarItemService: CalendarItemService,
+    private countryService: CountryService,
+  ) { }
+
+  ngOnInit() {
+    const id = +this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loading = true;
+      this.calendarItemService.getItem(id)
+        .subscribe(item => {
+          this.loading = false;
+          this.item = item;
+          this.title = item.name.text;
+        }, error => {
+          this.loading = false;
+          if (error.error instanceof ErrorEvent) {
+            console.error('An error occurred:', error.error.message);
+          } else {
+            window.alert('Server error: ' + JSON.stringify(error.error));
+          }
+        });
+    } else {
+      this.item = { id: 0, calendar_id: 1, name: { text: '', lang_code: 'en' }, location: { text: '', lang_code: 'en' }, description: { text: '', lang_code: 'en' } } as CalendarItem;
+    }
+    this.countryService.getList()
+      .subscribe(list => {
+        this.countries = list.countries;
+      });
+  }
+
+  compareCountry(c1: Country, c2: Country): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+  onSubmit(form: any) {
+    this.submitted = true;
+    if (form.form.valid) {
+      this.loading = true;
+      if (this.item.id) {
+        this.calendarItemService.updateItem(this.item)
+          .subscribe(item => {
+            this.router.navigate(['/items']);
+          }, error => {
+            this.loading = false;
+            if (error.error instanceof ErrorEvent) {
+              console.error('An error occurred:', error.error.message);
+            } else {
+              window.alert('Server error: ' + JSON.stringify(error.error));
+            }
+          });
+      } else {
+        this.calendarItemService.addItem(this.item)
+          .subscribe(item => {
+            this.router.navigate(['/items']);
+          }, error => {
+            this.loading = false;
+            if (error.error instanceof ErrorEvent) {
+              console.error('An error occurred:', error.error.message);
+            } else {
+              window.alert('Server error: ' + JSON.stringify(error.error));
+            }
+          });
+      }
+    }
+  }
+
+  delete() {
+    if (window.confirm('Are you sure you want to delete this Date? Click OK to proceed.')) {
+      this.calendarItemService.deleteItem(this.item.id)
+        .subscribe(() => {
+          window.alert('Item deleted.');
+          this.router.navigate(['/items']);
+        }, error => {
+          this.loading = false;
+          if (error.error instanceof ErrorEvent) {
+            console.error('An error occurred:', error.error.message);
+          } else {
+            window.alert('Server error: ' + JSON.stringify(error.error));
+          }
+        });
+    }
+  }
+
+}
