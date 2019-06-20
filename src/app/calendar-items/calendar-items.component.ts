@@ -13,7 +13,7 @@ import { Country } from '../country';
 })
 export class CalendarItemsComponent implements OnInit {
 
-  items: CalendarItemList = { items: [] };
+  items: CalendarItemList = { items: [], total_count: 0 };
 
   countries: Country[] = [];
 
