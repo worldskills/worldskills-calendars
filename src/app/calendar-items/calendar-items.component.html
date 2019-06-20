@@ -43,7 +43,7 @@
     <ngb-pagination [collectionSize]="items.total_count" [(page)]="page" [pageSize]="pageSize" [maxSize]="10" [boundaryLinks]="true" (pageChange)="loadItems()"></ngb-pagination>
   </div>
   <div class="col-md-3">
-    <form name="form" novalidate (ngSubmit)="onSubmit(calendarItemForm)">
+    <form name="form" novalidate (ngSubmit)="onSubmit()">
       <div class="card">
         <h2 class="card-header h5 mt-0 mb-0">Search dates</h2>
         <div class="card-body">
