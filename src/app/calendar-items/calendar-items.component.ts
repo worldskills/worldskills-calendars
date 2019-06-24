@@ -56,8 +56,10 @@ export class CalendarItemsComponent implements OnInit {
         this.loading = false;
         if (error.error instanceof ErrorEvent) {
           console.error('An error occurred:', error.error.message);
-        } else {
+        } else if (error.status > 0) {
           window.alert('Server error: ' + JSON.stringify(error.error));
+        } else {
+          console.error('An error occurred:', error.error);
         }
       });
   }
