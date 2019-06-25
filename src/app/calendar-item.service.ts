@@ -56,6 +56,16 @@ export class CalendarItemService {
     return this.http.put<CalendarItem>(url, item, httpOptions);
   }
 
+  cloneItem(id: number): Observable<CalendarItem> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    let url = `${environment.apiEndpoint}/calendars/items/${id}/clone`;
+    return this.http.post<CalendarItem>(url, httpOptions);
+  }
+
   deleteItem(id: number): Observable<{}> {
     const httpOptions = {
       headers: new HttpHeaders({

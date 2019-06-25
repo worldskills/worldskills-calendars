@@ -9,6 +9,7 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
     <h1 class="h2">{{title||"Add Date"}}</h1>
     <div class="btn-toolbar" *ngIf="item.id">
+      <button (click)="clone()" class="btn btn-light mr-2">Duplicate</button>
       <button (click)="delete()" class="btn btn-danger">Delete</button>
     </div>
   </div>

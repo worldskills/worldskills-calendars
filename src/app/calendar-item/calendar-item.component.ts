@@ -92,6 +92,23 @@ export class CalendarItemComponent implements OnInit {
     }
   }
 
+  clone() {
+    if (window.confirm('Duplicating the Date will create a copy. Click OK to proceed.')) {
+      this.calendarItemService.cloneItem(this.item.id)
+        .subscribe(item => {
+          window.alert('The Date has been duplicated successfully. Please edit the information of the duplicate below.');
+          this.router.navigate(['/items', item.id]);
+        }, error => {
+          this.loading = false;
+          if (error.error instanceof ErrorEvent) {
+            console.error('An error occurred:', error.error.message);
+          } else {
+            window.alert('Server error: ' + JSON.stringify(error.error));
+          }
+        });
+    }
+  }
+
   delete() {
     if (window.confirm('Are you sure you want to delete this Date? Click OK to proceed.')) {
       this.calendarItemService.deleteItem(this.item.id)
