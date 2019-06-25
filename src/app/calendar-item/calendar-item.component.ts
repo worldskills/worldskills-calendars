@@ -23,6 +23,8 @@ export class CalendarItemComponent implements OnInit {
 
   loading = false;
 
+  tempStartDate: Date;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -37,6 +39,7 @@ export class CalendarItemComponent implements OnInit {
       this.calendarItemService.getItem(id)
         .subscribe(item => {
           this.loading = false;
+          this.tempStartDate = new Date(item.start_date);
           this.item = item;
           this.title = item.name.text;
         }, error => {
@@ -48,7 +51,7 @@ export class CalendarItemComponent implements OnInit {
           }
         });
     } else {
-      this.item = { id: 0, calendar_id: 1, name: { text: '', lang_code: 'en' }, location: { text: '', lang_code: 'en' }, description: { text: '', lang_code: 'en' } } as CalendarItem;
+      this.item = { id: 0, calendar_id: 1, name: { text: '', lang_code: 'en' }, location: { text: '', lang_code: 'en' }, description: { text: '', lang_code: 'en' }, start_date: '', end_date: '' } as CalendarItem;
     }
     this.countryService.getList()
       .subscribe(list => {
@@ -88,6 +91,19 @@ export class CalendarItemComponent implements OnInit {
               window.alert('Server error: ' + JSON.stringify(error.error));
             }
           });
+      }
+    }
+  }
+
+  onStartDateChange(newStartDate: string) {
+    var parsedStartDate = new Date(newStartDate);
+    if (parsedStartDate instanceof Date && !isNaN(parsedStartDate.getTime())) {
+      var diff = parsedStartDate.getTime() - this.tempStartDate.getTime();
+      this.tempStartDate = parsedStartDate;
+      var parsedEndDate = new Date(this.item.end_date);
+      if (parsedEndDate instanceof Date && !isNaN(parsedEndDate.getTime())) {
+        var newEndDate = new Date(parsedEndDate.getTime() + diff);
+        this.item.end_date = newEndDate.toISOString().slice(0, 10);
       }
     }
   }

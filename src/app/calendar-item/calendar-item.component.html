@@ -29,7 +29,7 @@
               <div class="form-group">
                 <label for="start_date">Start date</label>
                 <div class="input-group">
-                  <input type="date" class="form-control" placeholder="YYYY-MM-DD" id="startDate" name="startDate" required [ngClass]="{'is-invalid':!startDate.valid && (!startDate.pristine || submitted)}" [(ngModel)]="item.start_date" #startDate="ngModel" #dStartDate="ngbDatepicker" ngbDatepicker>
+                  <input type="date" class="form-control" placeholder="YYYY-MM-DD" id="startDate" name="startDate" required [ngClass]="{'is-invalid':!startDate.valid && (!startDate.pristine || submitted)}" [(ngModel)]="item.start_date" (ngModelChange)="onStartDateChange($event)" #startDate="ngModel" #dStartDate="ngbDatepicker" ngbDatepicker autocomplete="off">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" (click)="dStartDate.toggle()" type="button"><i class="fa fa-calendar"></i></button>
                   </div>
@@ -39,7 +39,7 @@
               <div class="form-group">
                 <label for="start_date">End date</label>
                 <div class="input-group">
-                  <input type="date" class="form-control" placeholder="YYYY-MM-DD" id="endDate" name="endDate" required [ngClass]="{'is-invalid':!endDate.valid && (!endDate.pristine || submitted)}" [(ngModel)]="item.end_date" #endDate="ngModel" #dEndDate="ngbDatepicker" ngbDatepicker>
+                  <input type="date" class="form-control" placeholder="YYYY-MM-DD" id="endDate" name="endDate" required [ngClass]="{'is-invalid':!endDate.valid && (!endDate.pristine || submitted)}" [(ngModel)]="item.end_date" #endDate="ngModel" #dEndDate="ngbDatepicker" ngbDatepicker autocomplete="off">
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" (click)="dEndDate.toggle()" type="button"><i class="fa fa-calendar"></i></button>
                   </div>
