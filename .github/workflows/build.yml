@@ -19,8 +19,9 @@ jobs:
         npm ci
       env:
         CI: true
-    - name: Build
-      run: ng build
+    - name: Build for staging
+      if: github.ref == 'refs/heads/master'
+      run: ng build --configuration=staging
     - name: Deploy to staging
       if: github.ref == 'refs/heads/master'
       uses: actions/aws/cli@master
@@ -37,6 +38,9 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
+    - name: Build for production
+      if: github.ref == 'refs/heads/prod'
+      run: ng build --configuration=prod
     - name: Deploy to production
       if: github.ref == 'refs/heads/prod'
       uses: actions/aws/cli@master
