@@ -23,7 +23,8 @@ jobs:
       run: ng build
     - name: Deploy
       uses: actions/aws/cli@master
-      run: aws s3 sync dist/ s3://$BUCKET
+      with:
+        args: s3 sync dist/ s3://$BUCKET
       env:
         BUCKET: ${{ secrets.BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
