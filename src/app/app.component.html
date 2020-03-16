@@ -28,7 +28,16 @@
     </a>
     <div class="collapse navbar-collapse">
       <button class="btn btn-light btn-sm ml-auto" (click)="login();" *ngIf="!isLoggedIn">Log in</button>
-      <button class="btn btn-light btn-sm ml-auto" (click)="logout();" *ngIf="isLoggedIn">Log out</button>
+      <div class="dropdown ml-auto" *ngIf="isLoggedIn">
+        <button class="btn btn-white rounded-pill" type="button" data-toggle="dropdown">
+          {{user.first_name|slice:0:1}}{{user.last_name|slice:0:1}}
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item disabled" href="#" tabindex="-1">{{user.first_name}} {{user.last_name}}</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href (click)="logout();">Logout</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
