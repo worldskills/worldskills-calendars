@@ -31,7 +31,9 @@
             <td>{{item.country?.name.text}}</td>
           </tr>
           <tr *ngIf="loading">
-              <td colspan="3" class="text-muted">Loading...</td>
+              <td colspan="3" class="text-muted">
+                <div class="spinner-border spinner-border-sm" role="status"></div> Loading...
+              </td>
           </tr>
           <tr *ngIf="!loading && items.items.length == 0">
               <td colspan="3" class="text-muted">No dates found.</td>
