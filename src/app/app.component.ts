@@ -48,8 +48,8 @@ export class AppComponent {
 
   logout() {
     const authorizationHeader = this.oauthService.authorizationHeader();
+    this.oauthService.logOut();
     this.authService.logOut(authorizationHeader).subscribe(() => {
-      this.oauthService.logOut();
       window.location.reload();
     });
   }
