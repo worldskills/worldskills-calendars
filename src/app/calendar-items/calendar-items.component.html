@@ -27,7 +27,7 @@
         <tbody>
           <tr *ngFor="let item of items.items">
             <td>{{item.start_date|date:'dd.MM.yyyy'}}</td>
-            <td><a routerLink="/items/{{item.id}}">{{item.name.text}}</a></td>
+            <td><a routerLink="/items/{{item.id}}">{{item.name.text}}</a>&nbsp;<span *ngIf="item.status != 'scheduled'" class="badge badge-secondary">{{item.status|titlecase}}</span></td>
             <td>{{item.country?.name.text}}</td>
           </tr>
           <tr *ngIf="loading">

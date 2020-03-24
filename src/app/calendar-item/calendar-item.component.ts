@@ -51,7 +51,7 @@ export class CalendarItemComponent implements OnInit {
           }
         });
     } else {
-      this.item = { id: 0, calendar_id: 1, name: { text: '', lang_code: 'en' }, location: { text: '', lang_code: 'en' }, description: { text: '', lang_code: 'en' }, start_date: '', end_date: '' } as CalendarItem;
+      this.item = { id: 0, calendar_id: 1, name: { text: '', lang_code: 'en' }, location: { text: '', lang_code: 'en' }, description: { text: '', lang_code: 'en' }, start_date: '', end_date: '', status: 'scheduled' } as CalendarItem;
     }
     this.countryService.getList()
       .subscribe(list => {
