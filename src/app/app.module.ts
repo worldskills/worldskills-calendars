@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { CalendarItemsComponent } from './calendar-items/calendar-items.component';
 import { CalendarItemComponent } from './calendar-item/calendar-item.component';
 import { NgbIsoDateAdapter } from './ngb-iso-date-adapter';
+import { WorldskillsAngularLibModule } from '@worldskills/worldskills-angular-lib';
 
 @NgModule({
   declarations: [
