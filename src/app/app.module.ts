@@ -11,7 +11,28 @@ import { AppComponent } from './app.component';
 import { CalendarItemsComponent } from './calendar-items/calendar-items.component';
 import { CalendarItemComponent } from './calendar-item/calendar-item.component';
 import { NgbIsoDateAdapter } from './ngb-iso-date-adapter';
+import { AuthConfig } from 'angular-oauth2-oidc';
 import { WorldskillsAngularLibModule } from '@worldskills/worldskills-angular-lib';
+
+const serviceConfig = {
+  appCode: 3400 ,
+  userServiceEndpoint: `${environment.apiEndpoint}/auth`,
+  resourceApiPath: `${environment.apiEndpoint}/resources`,
+  authApiPath: `${environment.apiEndpoint}/auth`
+};
+
+const oAuthConfig = {
+  loginUrl: environment.loginURI,
+  clientId: environment.clientId,
+  oidc: false,
+  redirectUri: window.location.origin + '/',
+  requireHttps: false
+} as AuthConfig;
+
+const httpConfig = {
+  encoderUriPatterns: [],
+  authUriPatterns: ['api.worldskills.org']
+};
 
 @NgModule({
   declarations: [
@@ -30,7 +51,8 @@ import { WorldskillsAngularLibModule } from '@worldskills/worldskills-angular-li
       }
     }),
     NgbModule,
-    FormsModule
+    FormsModule,
+    WorldskillsAngularLibModule.forConfig(serviceConfig, oAuthConfig, httpConfig)
   ],
   providers: [
     { provide: NgbDateAdapter, useClass: NgbIsoDateAdapter },
