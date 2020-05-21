@@ -108,6 +108,14 @@ export class CalendarItemComponent implements OnInit {
     }
   }
 
+  onUrlChange() {
+    if (this.item.url != '') {
+        if (!/^http/i.test(this.item.url)) {
+            this.item.url = 'http://' + this.item.url;
+        }
+    }
+  }
+
   clone() {
     if (window.confirm('Duplicating the Date will create a copy. Click OK to proceed.')) {
       this.calendarItemService.cloneItem(this.item.id)

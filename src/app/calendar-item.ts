@@ -6,6 +6,7 @@ export class CalendarItem {
   name: I18nString;
   country?: Country;
   location: I18nString;
+  url?: string;
   description: I18nString;
   start_date: any;
   end_date: any;
