@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   environmentWarning: 'This is the local development environment. Happy coding!',
   clientId: '5bc213b7bfee',
-  loginURI: 'http://worldskills-auth.localhost/oauth/authorize',
+  loginURI: 'http://localhost:50300/oauth/authorize',
   apiEndpoint: 'http://localhost:8080',
 };
 
