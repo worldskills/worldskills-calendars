@@ -68,4 +68,4 @@ jobs:
         channel: '#code'
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      if: always()
+      if: github.actor != 'dependabot[bot]'
